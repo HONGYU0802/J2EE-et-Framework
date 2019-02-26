@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+	
+<!-- package:指定包前缀 指定持久化类所在的包名 这样之后calss子元素中就不必使用全限定性的类名 -->	
+<hibernate-mapping package="entity">
+
+<!-- 使用class元素定义一个持久化类。table="tbl_user"：对应数据库表名，默认持久化类名作为表名； -->
+<class name="Payment" table = "Payment">
+
+	<id name="paymentId" column="P_Id">	
+		<generator class="increment"/>	
+	</id>
+	<!-- Container是一个抽象类，他有两个子类，但共享一张数据表，相互之间用container_type字段进行区分,这个标签主要是定义类和子类的一个识别其 -->
+	<!-- 鉴别器，必须位于ID下面，Property上面，column="type"更清晰 -->
+	<discriminator column="a" />
+	
+	<!-- <property>：为类定义一个持久化的javaBean风格的属性。name="name"：标识属性的名字，以小写字母开头；
+            column="name"：表主键字段的名字，如果不填写与name一样； -->
+	<property name="description" column="Description"/>
+	
+	<!-- 继承映射 -->
+	<!-- 使用subclass 将  所有子类映射到一张表 (1张表) -->
+	<subclass name="CreditCartPayment" discriminator-value="CC">
+		<property name="type"/>
+	</subclass>
+	<subclass name="CashPayment" discriminator-value="CQ">
+		<property name="monnaie"/>
+	</subclass>
+	
+</class>
+</hibernate-mapping>
+
+	
+		

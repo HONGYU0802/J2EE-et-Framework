@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+	
+<hibernate-mapping>
+<!-- 设置表 -->
+<class name="entity.Payment" table = "Payment2">
+
+	<id name="paymentId" column="P_Id">	
+		<generator class="increment"/>	
+	</id>
+	<!-- 给payment2设置一个description的属性列 -->
+	<property name="description" column="Description"/>
+	
+	<!-- 通过joined-subclass 将每个类映射到对应的表，每个表都保留 -->
+	<joined-subclass name="entity.CreditCartPayment" table="CREDIT_PAYMENT">
+		<key column="PAYMENTID"/> <!-- 子表引用的主键 -->
+		<property name="type"/>
+	</joined-subclass>
+	
+	<joined-subclass name="entity.CashPayment" table="CASH_PAYMENT">
+		<key column="PAYMENTID"/>
+		<property name="monnaie"/>
+	</joined-subclass>
+	
+</class>
+
+</hibernate-mapping>
+
+	
+		
