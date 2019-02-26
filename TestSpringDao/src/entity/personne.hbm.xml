@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- hibernate设置 -->
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping >
+
+<!-- 创建数据表 -->
+  <class name="entity.Personne" table="PERSONNE">
+  
+  	<id name="id" column="p_id" >
+  		<generator class="increment"/>
+  	</id>
+  	
+  	<property name="age" type ="string" column = "Age"/>
+  	<property name="nom" type ="string" column = "Nom"/>
+  	
+  </class>
+  
+</hibernate-mapping>
