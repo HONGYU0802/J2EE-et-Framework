@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>LoginPage</title>
+</head>
+<body>
+<!-- 通过servlet名直接调用 -->
+<!-- <form> 元素：用于收集用户输入
+	 action 属性规定向何处提交表单的地址（URL）（提交页面）
+	 method 属性规定在提交表单时所用的 HTTP 方法（GET没有敏感信息 或 POST）-->
+<form action="ServletLogin" method="post">
+<!-- <input>表单元素 
+	 type 属性：text: 定义常规文本输入; submit: 定义提交按钮（提交表单）
+	 name 属性规定识别表单的名称（对于 DOM 使用：document.forms.name）
+	 value 属性规定输入字段的初始值： -->
+	login : <input type="text" name="lelogin">
+	pass : <input type="text" name="lepass">
+	<input type="submit" value="entrer">	
+</form>
+</body>
+</html>
