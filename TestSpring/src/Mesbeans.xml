@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
+
+
+<!--控制反转：直接调用问题提供商，具体提问哪个问题通过调用提前设置好的 bean id 来调用，这样开发者就不用关注先生成父类，再生成子类的麻烦-->   
+    <bean id="Java"  class="springIoc.QuestionJava"></bean>  
+    <bean id="Sport"  class="springIoc.QuestionSport"></bean>
+       
+    <bean id="titi"  class="springIoc.FournisseurQuestion">
+   	 <property name="question" ref="Java"/>	<!--此成员变量所在的具体子类-->
+    </bean>
+    
+    <bean id="toto"  class="springIoc.FournisseurQuestion">
+   	 <property name="question" ref="Sport"/>
+    </bean>
+<!--控制反转^^^^^^^-->
+
+
+
+
+
+<!--依赖注入，在 value 里可以注入构造对象属性的初始值-->
+	<bean id="Inject"  class="springIoc.Injection">
+     <property name="ans" value="null"></property>
+    </bean> 
+ <!--依赖注入^^^^^^-->
+ 
+
+
+
+ <!--切面，当插入点执行时，就插入规定好的方法--> 
+ 	<bean id= "decore" class="springAop.Decoration"/>
+ 	
+    <aop:config>
+      <aop:pointcut id="servicePointCut1" expression ="execution(* *.*.*(..))"/>  <!--满足此表达式的方法，放入切点1，执行此切点映射的切面方法-->  
+      <aop:pointcut id="servicePointCut2" expression ="execution(* *.*.*(..))"/>
+         
+      <aop:aspect id="decoreAspect" ref="decore">  <!--触发此切面，ref此切面方法所在的类-->  
+         <aop:before method="ecrireAvant" pointcut-ref="servicePointCut1"/>  <!--具体某个切点执行哪个方法-->  
+         <aop:after-returning method ="ecrireApres" returning="result" pointcut-ref="servicePointCut2"/>
+      </aop:aspect> 
+    </aop:config> 
+  <!--切面^^^^^^-->  
+  
+  
+</beans>
