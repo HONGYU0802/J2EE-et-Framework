@@ -1,0 +1,22 @@
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+<!-- 数据库连接池 -->
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<!-- 配置连接池属性 --> 
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+    <property name="url" value="jdbc:mysql://localhost/TestDao?characterEncoding=UTF-8"> </property>
+    <property name="username" value="root"></property>
+    <property name="password" value="lhy940802"></property>
+</bean>
+
+<!-- 配置SqlSessionFactory对象 --> <!-- 初始化数据库时，执行initDatabase方法 -->
+<bean id="personDao" class="dao.PersonDaoImpl" depends-on="dataSource" init-method="initDatabase">
+	<!-- 注入数据库连接池--> 	<!-- 把这个继承了person接口的实现类的对象，存到上边那个数据库里，同理可设置多个数据库存不同对象  -->
+    <property name="dataSource" ref="dataSource"></property>
+</bean>
+
+</beans>
