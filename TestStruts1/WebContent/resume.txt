@@ -1,0 +1,51 @@
+Struts的开发步骤：
+	创建ActionForm实现
+	ActionForm是数据表单的对象实现。
+	创建Action实现
+	完成其execute()方法。
+	创建数据表单Jsp和结果Jsp
+	配置Struts-config.xml
+---------------------------------------------------------------------
+web.xml配置
+在Struts框架中只能有一个Servlet,因为Servlet支持多线程。而<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+中的ActionServlet是在Struts.jar包中的.在导入Struts包时会导入。
+
+<init-param>子元素用于配置Servlet初始化参数。 
+   config ：以相对路径的方式指明Struts应用程序的配置文件位置,如不设置，则默认值为/WEB-INF/struts-config.xml
+   debug : 设置Servlet的debug级别,控制日志记录的详细程度。默认为0，记录相对最少的日志信息。
+<load-on-startup>？</load-on-startup>中？号的值是此ActionServlet在服务器开启时加载的次序，数值越低，越先加载。
+<welcome-file-list>是用来设置此项.
+当客户访问Web应用时，如果仅仅给出Web应用的Root URL,没有指定具体的文件名。Web容器会自动调用Web应用的欢迎文件。
+---------------------------------------------------------------------------------
+struts-congig.xml文件配置：（ 以上各元素必须是按照这个顺序的，若开发人员打乱顺序，很可能引起Struts容器启动时出错。）
+	<form-beans>中配置相对应的实体bean，该元素主要用来配置表单验证的类
+		name：ActionForm Bean的惟一标识。必须。
+　　		type：ActionForm的完整类名。必须。
+	<action-mappings>中配置对应的action，可以配置多个action，一个action对应一个action的标签，
+		Path:指明调用者（jsp）能通过中心控制器ActionServlt找到该Action
+		Type：指明该Action的类名
+		Name：该Action应用的Form名称
+		
+<!--表单input里的name要与ActionForm实现类里的属性名一样（和bean中的一模一样）--> 
+---------------------------------------------------------------------------------------
+1.读取配置
+	Struts框架总控制器（ActionServlet）是一个Servelt，在web.xml中配置成自动启动的Servlet，
+	读取配置文件（Struts-config.xml）的配置文件信息，为不同的Struts模块初始化响应
+2.发送请求
+	用户提交表单或调用URL向web应用的程序器提交一个请求，请求的数据用HTTP协议上传给Web服务器
+3.填充Form(实例化，复位，填充数据，校验，保存)
+	（*.do请求）从ActionConfig中找到对应该请求的Action的子类，如没有对应的Action，控制器直接转化给Jsp或静态的页面。
+	如有对应的Action且这个Action有一个对应的ActionForm，ActionForm被实例化并用HTTP请求的数据填充其属性，
+	并且保存在ServletConfig中（request或session中），这样他们就可以被其他的Action对象或者Jsp调用了。
+	这个后面会说到如何保存这个form到各个域中
+4.派发请求
+	控制器根据配置信息ActionConfig将请求派发到具体的Action，相应的FormBean一并传给这个Action的execute()方法
+5.处理业务
+	Action一般只包含一个execute()方法，它负责执行相应的业务逻辑（调用其他业务模块）。
+	完毕返回一个ActionFoward对象，控制器通过这个AcationForward对象进行转发工作。
+6.返回响应
+	Action根据业务逻辑处理的不同结果返回一个目标响应对象总控制器，该目标响应对象给总控制器，该目标响应对象对应一个具体的Jsp页面或另一Action
+7.查找响应（翻译响应）
+	总控制器根据业务功能Action返回的目标响应对象，找到对应的资源对象，通常是一个具体的jsp页面.
+8.响应客户
+	目标响应对象结果展现给用户目标响应对象（JSP）将结果页面展现给用户。
