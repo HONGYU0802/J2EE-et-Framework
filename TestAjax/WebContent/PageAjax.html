@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PageAjax</title>
+<script type="text/javascript">
+
+function ajaxFunction(){	//随便命名
+	var xmlHttp;	//变量，没有类型
+	try{
+		//XMLHttpRequest 用于在后台与服务器交换数据。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
+		xmlHttp=new XMLHttpRequest();
+	}
+	catch(e){
+		try{
+			xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");//IE高版本
+		}
+		catch(e){
+			try{
+				xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");	//IE低版本
+			}
+			catch(e){
+				alert("not support AJAX");
+				return false;
+			}
+		}
+	}
+	//当请求被发送到服务器时，我们需要执行一些基于响应的任务。每当 readyState 改变时，就会触发 onreadystatechange 事件。
+	xmlHttp.onreadystatechange=function(){
+		//readyState存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。4-请求已完成，且响应已就绪
+		if(xmlHttp.readyState==4){
+			//后台返回的是文本所以responseText
+			document.monForm.heure.value=xmlHttp.responseText;//document此文档的monform的heure标签的value值=响应的值
+		}
+	}
+	//如需将请求发送到服务器，我们使用 XMLHttpRequest 对象的 open() 和 send() 方法
+	//open(method,url,async)，
+	//method：请求的类型；GET 或 POST，url：文件在服务器上的位置， async：true（异步）或 false（同步）
+	xmlHttp.open("GET","ser1",true); //es:nom de la servlet ou URL http://localhost:8080/Web2.0/es
+	//xmlHttp.open("GET","data.html",true);
+	xmlHttp.send(null);//send(string)将请求发送到服务器。
+}
+
+
+function ajaxFunction2(){
+	var xmlHttp;
+	try{
+		xmlHttp=new XMLHttpRequest();
+	}
+	catch(e){
+		try{
+			xmlHttp=new ActiveXObjet("Msxml2.XMLHTTP");
+		}
+		catch(e){
+			try{
+				xmlHttp=new ActiveXObjet("Microsoft.XMLHTTP");	
+			}
+			catch(e){
+				alert("not support AJAX");
+				return false;
+			}
+		}
+	}
+	
+	xmlHttp.onreadystatechange=function(){
+		if(xmlHttp.readyState==4){//status=200为正常，404则连接xmlHTTP.open的url处有误
+			var doc=xmlHttp.responseXML;//后台返回的是xml文件，所以responseXML
+			var element=doc.getElementsByTagName("etat").item(0).innerHTML;//不加innerHTML则输出的是对象，提示[object object]
+			document.getElementById("txtCache2").innerHTML="recevoir:"+element;
+			var element2=doc.getElementsByTagName("etat").item(1).innerHTML;//不加innerHTML则输出的是对象，提示[object object]
+			document.getElementById("txtCache3").innerHTML="recevoir:"+element2;
+		}
+	}
+	xmlHttp.open("GET","data.xml",true); //要读取文件的位置
+	xmlHttp.send(null);
+}
+
+</script>
+</head>
+
+<body>
+<!-- 提交表单可以返回后台数据 -->
+<form action="ser1" method="get">
+<input type="submit" />
+</form>
+<!-- 不提交表单，通过Ajax同步传值，不会跳转或刷新整个网页 -->
+<form name="monForm" action="">
+<!-- 当用户释放键盘按钮时执行Javascript代码,onkeyup 事件会在键盘按键被松开时发生。onkeydown,onkeypress -->
+name:<input type="text" onkeyup="ajaxFunction()" name="nom" />
+time:<input type="text" name="heure" value="111"/>
+</form>
+
+<p><span id="txtCache2">WWWWWW</span></p>
+<p><span id="txtCache3">xxxxxx</span></p>
+
+<input type="button" ONCLICK="ajaxFunction2()" value="change" />
+
+</body>
+</html>
