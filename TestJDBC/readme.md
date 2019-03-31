@@ -1,2 +1,2 @@
 
-![xgcalendar screenshot1](J2EE-et-Framework/1.png) 
+![xgcalendar screenshot1](1.png) 
