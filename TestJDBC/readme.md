@@ -1,6 +1,7 @@
 ## ajouter lihongyu elfe Good
-.<img src="https://github.com/HONGYU0802/J2EE-et-Framework/blob/master/1.png" width="350" />
-.<img src="https://github.com/HONGYU0802/J2EE-et-Framework/blob/master/2.png" width="350" />
+<img src="https://github.com/HONGYU0802/J2EE-et-Framework/blob/master/1.png" width="350" />
+
+<img src="https://github.com/HONGYU0802/J2EE-et-Framework/blob/master/2.png" width="350" />
  
 ## delete lihongyu elfe Good
 ![img text](https://github.com/HONGYU0802/J2EE-et-Framework/blob/master/3.png)  
