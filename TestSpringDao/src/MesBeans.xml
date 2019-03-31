@@ -13,7 +13,7 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
 
 
-   
+   <!-- 一个普通的数据库连接池 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
  	    <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 	    <property name="url" value="jdbc:mysql://localhost/TestSpringDao?characterEncoding=UTF-8"></property>
@@ -21,7 +21,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
 	    <property name="password" value="lhy940802"></property>
 	</bean>
 
-
+	<!-- 会话工厂指定要连接的数据库，要存的对象（类） -->
 	<bean id="mySessionFactory"  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" >
 		<property name="dataSource">
 			<ref bean="dataSource"/>
@@ -29,7 +29,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
 		
 		<property name="mappingResources">
 			<list>
-				<value>entity/Personne.hbm.xml</value>
+				<value>entity/Personne.hbm.xml</value><!-- ORM 对象关系映射，此处应用的是XML方法 -->
 			</list>
 		</property>
 		
@@ -42,7 +42,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
 		</property>
 	 </bean> 
 	 
-	 
+	 <!-- DAO的实现类，连接到上边那个会话工厂 -->
 	 <bean id="DAOPersonne" class="springDao.DAOPersonneImpl" >
              <property name="sessionFactory" ref="mySessionFactory"/> 
      </bean>

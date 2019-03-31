@@ -9,21 +9,17 @@ import ent.Elfe;
 
 
 public class DaoElfImpl  implements DaoElf{
-	
-	public static int x=2;
-	
+		
 	@Override
 	public void Insert(Elfe bean) {
 		try {
 			Connection c= ConnectionBd.getConnection();
 			Statement statement=c.createStatement();
-			statement.executeUpdate("Insert into Elf VALUES ('"+x+"','"+bean.getNom()+"','"+bean.getRace()+"','"+bean.getDesc()+"')");			
-			//statement.executeUpdate("Insert into Elf(nom,race,desc) VALUES ('"+bean.getNom()+"','"+bean.getRace()+"','"+bean.getDesc()+"')");			
-			x++;	
+			statement.executeUpdate("Insert into ELF VALUES ("+null+",'"+bean.getNom()+"','"+bean.getRace()+"','"+bean.getDesc()+"')");			
+			
 		} catch (Exception e2) {
 			System.out.println("probleme insert");
 		}
-		
 		
 	}
 
@@ -39,8 +35,23 @@ public class DaoElfImpl  implements DaoElf{
 			
 		} catch (Exception e2) {
 			System.out.println("probleme delete");
-		}
+		}		
 		
+	}
+	
+	@Override
+	public void update(Elfe bean, Integer id, String nom, String race, String desc) {
+			
+		try {
+			Connection c= ConnectionBd.getConnection();
+			Statement statement=c.createStatement();
+			//System.out.println("--"+id+nom+race+desc);
+			//System.out.println("update Elf set nom='"+nom+"', race='"+race+"', desc='"+desc+"' where id="+id);
+			statement.executeUpdate("update Elf set nom='"+nom+"', race='"+race+"', `desc`='"+desc+"' where id="+id);	
+			//System.out.println("marche!!!");
+		} catch (Exception e2) {
+			System.out.println("probleme update");
+		}
 		
 	}
 
@@ -93,25 +104,25 @@ public class DaoElfImpl  implements DaoElf{
 	}
 	
 	
+	
 	public static void main(String[] args) {
 		//ConnectionBd.getConnection();
 		DaoElfImpl impl=new DaoElfImpl();
-		
-		Elfe elfe2 = new Elfe();
+		//Elfe elfe2 = new Elfe();
 		//elfe2.setId(2);
-		elfe2.setNom("fengquan");
-		elfe2.setRace("elfe");
-		elfe2.setDesc("papa");
+		//elfe2.setNom("fengquan");
+		//elfe2.setRace("elfe");
+		//elfe2.setDesc("papa");
 		
-		impl.Insert(elfe2);
+		//impl.Insert(elfe2);
 		
 		List<Elfe> list=impl.findAll();
 		list.forEach(e->{System.out.println("id: "+e.getId()+"\nnom: "+e.getNom()+"\nrace: "+e.getRace()+"\ndesc: "+e.getDesc()); }  );
 		
-		//Elfe elfe=impl.findById(1);
+		Elfe elfe=impl.findById(68);
 		//System.out.println("id: "+elfe.getId()+"\nnom: "+elfe.getNom()+"\nrace: "+elfe.getRace()+"\ndesc: "+elfe.getDesc());
 		
-		//impl.delete(elfe);
+		impl.update(elfe, 68, "fffff", "elfe","tttttt");
 		
 
 	}

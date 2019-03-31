@@ -11,7 +11,7 @@ public class Nain extends Personnage{
 
 	@Override
 	public void setDesc(String des) {
-		description= getNom()+" "+ getRace()+" "+des;
+		description= des;
 		
 		
 	}

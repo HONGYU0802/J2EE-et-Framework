@@ -17,20 +17,20 @@ public class ConnectionBd {
 			//connextin
 			try{
 				Class.forName("com.mysql.jdbc.Driver");				
-				connection=DriverManager.getConnection("jdbc:mysql://localhost/base?characterEncoding=UTF-8","root","lhy940802");				
+				connection=DriverManager.getConnection("jdbc:mysql://localhost/base1?characterEncoding=UTF-8","root","lhy940802");				
 
-				System.out.println("yesssss");
+				System.out.println("Connection BD Bon");
 				
 			} catch (Exception e) {
-				System.out.println("noooooo");
+				System.out.println("PAS connection BD");
 			}
 		}
 		return connection;
 	}
-/*	测试是否连接成功
- * 	
+	//测试是否连接成功
+  	
 	public static void main(String[] args) {
 		ConnectionBd.getConnection();
 			
-	}*/
+	}
 }

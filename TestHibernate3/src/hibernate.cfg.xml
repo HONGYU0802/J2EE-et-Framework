@@ -4,7 +4,7 @@
           "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-  <session-factory>
+  <session-factory><!-- 通常，一个session-factory节点代表一个数据库 -->
   <property name="hibernate.connection.url">jdbc:mysql://localHost/TestHibernate3</property>
     <property name="connection.username">root</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
@@ -16,7 +16,7 @@
 	<property name="connection.characterEncoding">utf-8</property>
 	<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 	
- 	
-    <mapping resource="Personne.xml"/> 
+ 	<!--3. 加载所有映射-->
+    <mapping resource="Personne.xml"/> <!-- 关联的映射文件 -->
   </session-factory>
 </hibernate-configuration>
